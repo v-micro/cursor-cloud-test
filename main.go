@@ -12,11 +12,18 @@ func main() {
 		addr = ":" + port
 	}
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("/ping", pingHandler)
-
 	log.Printf("listening on %s", addr)
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	if err := http.ListenAndServe(addr, newMux()); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func newMux() *http.ServeMux {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/ping", pingHandler)
+	mux.HandleFunc("GET /users", userQueryHandler)
+	mux.HandleFunc("HEAD /users", userQueryHandler)
+	mux.HandleFunc("GET /users/{id}", userByIDHandler)
+	mux.HandleFunc("HEAD /users/{id}", userByIDHandler)
+	return mux
 }
