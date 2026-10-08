@@ -25,5 +25,9 @@ func newMux() *http.ServeMux {
 	mux.HandleFunc("HEAD /users", userQueryHandler)
 	mux.HandleFunc("GET /users/{id}", userByIDHandler)
 	mux.HandleFunc("HEAD /users/{id}", userByIDHandler)
+	mux.HandleFunc("GET /orders", orderQueryHandler)
+	mux.HandleFunc("HEAD /orders", orderQueryHandler)
+	mux.HandleFunc("GET /orders/{id}", orderByIDHandler)
+	mux.HandleFunc("HEAD /orders/{id}", orderByIDHandler)
 	return mux
 }

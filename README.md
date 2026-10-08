@@ -44,6 +44,31 @@ curl "http://127.0.0.1:8080/users/u1"
 
 `GET /users/{id}` 返回单个用户。id 不存在时返回 404。
 
+## 订单查询
+
+`GET /orders` 按查询参数过滤内存中的示例订单。多个条件同时生效。不传参数时返回全部订单。金额单位是分。
+
+| 参数 | 含义 |
+| --- | --- |
+| `q` | 在订单 id、用户 id、商品、状态中做不区分大小写的包含匹配 |
+| `id` | 按订单 id 精确匹配 |
+| `userId` | 按用户 id 精确匹配 |
+| `item` | 商品名称包含匹配 |
+| `status` | 按状态精确匹配，例如 `pending`、`paid`、`shipped` |
+
+```bash
+curl "http://127.0.0.1:8080/orders?userId=u1&status=paid"
+curl "http://127.0.0.1:8080/orders/o1"
+```
+
+查询响应示例：
+
+```json
+{"total":1,"orders":[{"id":"o2","userId":"u2","item":"Enigma notes","status":"pending","amount":4500}]}
+```
+
+`GET /orders/{id}` 返回单个订单。id 不存在时返回 404。
+
 ## 测试
 
 ```bash
